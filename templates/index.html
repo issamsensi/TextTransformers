@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <a href="/analyze">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/analyze.png') }}" alt="Analyze Icon">
+                <h2>Text Analyze</h2>
+            </div>
+        </a>
+        <a href="/generate">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/generate.png') }}" alt="Generate Icon">
+                <h2>Text Generation</h2>
+            </div>
+        </a>
+    </div>
+{% endblock %}
