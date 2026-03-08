@@ -15,7 +15,6 @@ def analyze():
         text = request.form['input_text']
         classifier = pipeline('sentiment-analysis')
         result = classifier(text)
-        print(result)
         return render_template('analyze.html', result=result, text=text)
 
     return render_template('analyze.html')
@@ -26,10 +25,11 @@ def generate():
         text = request.form['input_text']
         generator = pipeline('text-generation')
         result = generator(text, num_return_sequences=1, max_new_tokens=500)
-        print(result)
         return render_template('generate.html', result=result, text=text)
 
     return render_template('generate.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
