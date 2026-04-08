@@ -5,16 +5,102 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <form method="POST">
-            <textarea name="input_text" placeholder="Write or Paste your text here...">{{ text }}</textarea>
-            <button type="submit">Analyze</button>
-        </form>
-        {% if result %}
-            <div class="output">
-                <h2>Text Type:</h2>
-                <p> this is a {{ result[0]['label'] }} text</p>
-            </div>
-        {% endif %}
+    <div class="page-container">
+        <div class="page-header">
+            <h2><i class="fas fa-chart-pie"></i> Text Sentiment Analyzer</h2>
+            <p>Analyze the sentiment and emotion of your text using AI</p>
+        </div>
+        
+        <div class="container">
+            <form method="POST" id="analyzeForm">
+                <div class="form-group">
+                    <label for="input_text">Enter Your Text</label>
+                    <textarea 
+                        id="input_text"
+                        name="input_text" 
+                        placeholder="Write or paste your text here..." 
+                        class="textarea-enhanced"
+                    >{{ text }}</textarea>
+                    <div class="char-count">
+                        <span id="charCount">0</span> characters
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-magic"></i> Analyze Text
+                </button>
+            </form>
+            
+            {% if result %}
+                <div class="output-section">
+                    <div class="output-header">
+                        <h3><i class="fas fa-check-circle"></i> Analysis Result</h3>
+                    </div>
+                    <div class="result-card">
+                        <div class="sentiment-badge" data-sentiment="{{ result[0]['label'].lower() }}">
+                            <i class="fas fa-{% if result[0]['label'] == 'POSITIVE' %}smile{% else %}frown{% endif %}"></i>
+                            <span class="sentiment-label">{{ result[0]['label'] }}</span>
+                        </div>
+                        <div class="sentiment-score">
+                            <p class="label">Confidence Score</p>
+                            <div class="score-bar">
+                                <div class="score-fill" id="scoreFill">
+                                    <span id="scorePercent"></span>%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-display">
+                            <p class="label">Your Text:</p>
+                            <p class="text-content" id="textContent">{{ text }}</p>
+                            <button type="button" class="btn-copy" onclick="copyText()">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Submit text above to analyze its sentiment</p>
+                </div>
+            {% endif %}
+        </div>
     </div>
+    
+    <script>
+        const textarea = document.getElementById('input_text');
+        const charCount = document.getElementById('charCount');
+        
+        if (textarea) {
+            textarea.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+            });
+            // Initialize character count
+            charCount.textContent = textarea.value.length;
+        }
+        
+        function copyText() {
+            const textContent = document.getElementById('textContent');
+            const text = textContent ? textContent.textContent : '';
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Text copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+        
+        // Initialize score display if result exists
+        {% if result %}
+            window.addEventListener('load', function() {
+                const scorePercent = document.getElementById('scorePercent');
+                const scoreFill = document.getElementById('scoreFill');
+                if (scorePercent && scoreFill) {
+                    const score = {{ result[0]['score'] }};
+                    const scoreNum = parseFloat(score);
+                    const percentage = Math.round(scoreNum * 100);
+                    scorePercent.textContent = percentage;
+                    scoreFill.style.width = percentage + '%';
+                }
+            });
+        {% endif %}
+    </script>
 {% endblock %}

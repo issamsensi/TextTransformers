@@ -4,14 +4,96 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TextType</title>
+        <title>TextType - AI-Powered Text Tools</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                color: #333;
+            }
+            
+            header {
+                background: rgba(255, 255, 255, 0.95);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 1rem 2rem;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+            
+            header a {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                text-decoration: none;
+                color: #333;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                font-weight: 700;
+            }
+            
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+                margin-left: auto;
+                align-items: center;
+            }
+            
+            .nav-links a {
+                text-decoration: none;
+                color: #667eea;
+                font-weight: 600;
+                transition: color 0.3s ease;
+                font-size: 0.95rem;
+            }
+            
+            .nav-links a:hover {
+                color: #764ba2;
+            }
+            
+            @media (max-width: 768px) {
+                header {
+                    padding: 1rem;
+                }
+                
+                header h1 {
+                    font-size: 1.4rem;
+                }
+                
+                .nav-links {
+                    gap: 1rem;
+                    font-size: 0.85rem;
+                }
+            }
+        </style>
         {% block style %}
         
         {% endblock %}
     </head>
     <body>
         <header>
-            <a href="/"><h1>TextTransformers</h1></a>
+            <a href="/">
+                <i class="fas fa-magic"></i>
+                <h1>TextType</h1>
+            </a>
+            <div class="nav-links">
+                <a href="/analyze"><i class="fas fa-chart-pie"></i> Analyze</a>
+                <a href="/generate"><i class="fas fa-pen-fancy"></i> Generate</a>
+            </div>
         </header>
         {% block content %}
         

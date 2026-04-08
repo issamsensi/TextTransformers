@@ -5,18 +5,35 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <a href="/analyze">
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/analyze.png') }}" alt="Analyze Icon">
-                <h2>Text Analyze</h2>
-            </div>
-        </a>
-        <a href="/generate">
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/generate.png') }}" alt="Generate Icon">
-                <h2>Text Generation</h2>
-            </div>
-        </a>
+    <div class="hero">
+        <div class="hero-content">
+            <h2>Welcome to TextType</h2>
+            <p>Harness the power of AI to analyze and generate text</p>
+        </div>
     </div>
+    
+    <div class="container">
+        <div class="features-grid">
+            <a href="/analyze" class="feature-card">
+                <div class="card-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3>Text Analyzer</h3>
+                <p>Analyze sentiment and emotion in your text using advanced AI models</p>
+                <span class="cta">Get Started →</span>
+            </a>
+            <a href="/generate" class="feature-card">
+                <div class="card-icon">
+                    <i class="fas fa-pen-fancy"></i>
+                </div>
+                <h3>Text Generator</h3>
+                <p>Generate creative text continuations powered by state-of-the-art transformers</p>
+                <span class="cta">Get Started →</span>
+            </a>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2026 TextType. Powered by AI and Transformers.</p>
+    </footer>
 {% endblock %}

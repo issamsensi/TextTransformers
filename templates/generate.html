@@ -5,16 +5,82 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <form method="POST">
-            <textarea name="input_text" placeholder="Write or Paste your text here...">{{ text }}</textarea>
-            <button type="submit">Generate Text</button>
-        </form>
-        {% if result %}
-            <div class="output">
-                <h2>Generated Text:</h2>
-                <p>{{ result[0]['generated_text'] }}</p>
-            </div>
-        {% endif %}
+    <div class="page-container">
+        <div class="page-header">
+            <h2><i class="fas fa-pen-fancy"></i> AI Text Generator</h2>
+            <p>Generate creative text continuations powered by advanced AI</p>
+        </div>
+        
+        <div class="container">
+            <form method="POST" id="generateForm">
+                <div class="form-group">
+                    <label for="input_text">Enter Your Text Prompt</label>
+                    <textarea 
+                        id="input_text"
+                        name="input_text" 
+                        placeholder="Start with a phrase and let AI complete it..." 
+                        class="textarea-enhanced"
+                    >{{ text }}</textarea>
+                    <div class="char-count">
+                        <span id="charCount">0</span> characters
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-wand-magic-sparkles"></i> Generate Text
+                </button>
+            </form>
+            
+            {% if result %}
+                <div class="output-section">
+                    <div class="output-header">
+                        <h3><i class="fas fa-lightbulb"></i> Generated Output</h3>
+                    </div>
+                    <div class="result-card">
+                        <div class="generation-display">
+                            <div class="prompt-section">
+                                <p class="label">Original Prompt</p>
+                                <p class="prompt-text">{{ text }}</p>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="generated-section">
+                                <p class="label">AI Generated Text</p>
+                                <p class="generated-text">{{ result[0]['generated_text'] }}</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-copy" onclick="copyText()">
+                            <i class="fas fa-copy"></i> Copy Generated Text
+                        </button>
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Enter a prompt above to generate text</p>
+                </div>
+            {% endif %}
+        </div>
     </div>
+    
+    <script>
+        const textarea = document.getElementById('input_text');
+        const charCount = document.getElementById('charCount');
+        
+        if (textarea) {
+            textarea.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+            });
+            // Initialize character count
+            charCount.textContent = textarea.value.length;
+        }
+        
+        function copyText() {
+            const generatedText = document.querySelector('.generated-text');
+            const text = generatedText ? generatedText.textContent : '';
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Text copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+    </script>
 {% endblock %}
